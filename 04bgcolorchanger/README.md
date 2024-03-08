@@ -1,0 +1,3 @@
+onClick wants function as its parameter. But setColor needs value thereby executing function and onClick gets a value instead of a function as parameter.
+If we directly give setColor('red') (which is the syntax to set color to the variable else it will not work), this setColor will give him value which onClick() didnot want.
+So, giving a arrow function to onclick() and inside this arrow function we call setColor to set the background color.
