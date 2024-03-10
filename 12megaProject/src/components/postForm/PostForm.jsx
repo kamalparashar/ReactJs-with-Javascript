@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Button, Input, Select, RTE } from "../index";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import appwriteService from "../../appwrite/config";
+import { useSelector } from "react-redux";
 
 function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, getValues, control } =
@@ -18,6 +18,7 @@ function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
 
   const submit = async (data) => {
     if (post) {
@@ -46,10 +47,7 @@ function PostForm({ post }) {
           ...data,
           userId: userData.$id,
         });
-        console.log(dbPost);
-        console.log(dbPost.$id);
         if (dbPost) {
-          console.log("dbPost is created")
           navigate(`/post/${dbPost.$id}`);
         }
         else{

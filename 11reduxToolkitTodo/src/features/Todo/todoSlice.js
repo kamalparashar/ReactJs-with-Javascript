@@ -1,7 +1,7 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
-    todos: [{id: 1, text: "hello"}]
+    todos: [{id: 1, text: "Enter your ToDos"}]
 }
 
 export const todoSlice = createSlice({
@@ -11,7 +11,7 @@ export const todoSlice = createSlice({
         addTodo: (state, action) => {
             const todo = {
                 id: nanoid(), 
-                text: action.payload
+                text: action.payload //payload is an object
                 // giving text as name "text" in payload so no need to write '.text' at the end of payload(payload is an object) 
             }
             state.todos.push(todo);

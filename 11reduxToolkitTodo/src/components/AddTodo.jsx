@@ -8,7 +8,7 @@ function AddTodo() {
 
     const addTodoHandler = (e) => {
         e.preventDefault();
-        if(input != '')
+        if(input !== '')
           dispatch(addTodo(input));
         setInput('');
     }

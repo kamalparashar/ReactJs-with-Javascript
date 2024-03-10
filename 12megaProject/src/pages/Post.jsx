@@ -26,8 +26,11 @@ export default function Post() {
     const deletePost = () => {
         appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
-                appwriteService.deleteFile(post.FeaturedImage);
-                navigate("/");
+                appwriteService.deleteFile(post.FeaturedImage).then((status) => {
+                    if(status){
+                        navigate("/");
+                    }
+                })
             }
         });
     };
