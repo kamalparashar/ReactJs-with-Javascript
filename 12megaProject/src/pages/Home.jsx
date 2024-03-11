@@ -5,15 +5,7 @@ import { useSelector } from "react-redux";
 
 function Home() {
   const authStatus = useSelector((state) => state.auth.status)
-  
-  const [posts, setPosts] = useState([])
-    useEffect(() => {
-    appwriteService.getPosts([]).then((posts) => {
-        if (posts) {
-            setPosts(posts.documents)
-        }
-    })
-  },[authStatus]);
+  const posts = useSelector(state => state.posts.posts)
 
   if(authStatus){
     return (
@@ -24,12 +16,12 @@ function Home() {
                     No Posts to show
                   </h1> : 
                   <div className='flex flex-wrap'>
-                    {posts.map((post) => (
+                  {posts.map((post) => (
                       <div key={post.$id} className='p-2 w-1/4'>
                           <PostCard {...post} />
                       </div>
-                    ))}
-                  </div>
+                  ))}
+              </div>
                 }
               </Container>
       </div>

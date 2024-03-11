@@ -3,15 +3,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Post() {
-    const [post, setPost] = useState(null);
-    const { slug } = useParams();
-    const navigate = useNavigate();
+    const [post, setPost] = useState()
+    const { slug } = useParams()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const userData = useSelector((state) => state.auth.userData);
-
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
     useEffect(() => {
@@ -28,7 +28,8 @@ export default function Post() {
             if (status) {
                 appwriteService.deleteFile(post.FeaturedImage).then((status) => {
                     if(status){
-                        navigate("/");
+                        dispatch(deletePost(post))
+                        navigate("/")
                     }
                 })
             }

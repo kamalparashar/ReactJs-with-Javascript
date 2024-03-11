@@ -1,30 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
     posts: [{
-        $id:'',
-        userId:'',
-        title:'',
-        content:'',
-        status:'',
-        FeaturedImage:'',
+        $id: '',
+        title: '',
+        slug: '',
+        content: '',
+        status: '',
+        FeaturedImage: '',
+        
     }]
 }
 
-export const postsSlice = createSlice({
+export const postSlice = createSlice({
     name: "posts",
     initialState,
     reducers: {
         addPost: (state, action) => {
             const post = {
-                $id: action.payload.$id,
-                userId: action.payload.userId,
-                title: action.payload.title,
-                content: action.payload.content,
-                status: action.payload.status,
-                FeaturedImage: action.payload.FeaturedImage,
+                $id:action.payload.$id,
+                title:action.payload.title,
+                slug:action.payload.slug,
+                content:action.payload.content,
+                FeaturedImage:action.payload.FeaturedImage,
+                
             }
-            state.posts.push(post);
+            state.posts.push(post)
         },
         deletePost: (state, action) => {
             state.posts = state.posts.filter((post) => post.$id !== action.payload.$id)
@@ -32,15 +33,16 @@ export const postsSlice = createSlice({
         editPost: (state, action) => {
             state.posts.map((post) => {
                 if(post.$id === action.payload.$id){
-                    post.title = action.payload.title;
-                    post.content = action.payload.content;
-                    post.FeaturedImage = action.payload.FeaturedImage;
+                    post.title = action.payload.title
+                    post.slug = action.payload.slug
+                    post.content = action.payload.content
+                    post.FeaturedImage = action.payload.FeaturedImage
                 }
             })
         },
     }
 })
 
-export const {addPost, deletePost, editPost} = postsSlice.actions;
+export const {addPost, deletePost, editPost} = postSlice.actions;
 
-export default postsSlice.reducer;
+export default postSlice.reducer;

@@ -3,7 +3,8 @@ import { Button, Input, Select, RTE } from "../index";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import appwriteService from "../../appwrite/config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost, editPost } from "../../store/postsSlice";
 
 function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, getValues, control } =
@@ -19,7 +20,7 @@ function PostForm({ post }) {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
   const dispatch = useDispatch();
-
+  
   const submit = async (data) => {
     if (post) {
       const file = data.image[0]
@@ -35,7 +36,8 @@ function PostForm({ post }) {
         FeaturedImage: file ? file.$id : undefined,
       });
       if (dbPost) {
-        navigate(`/post/${dbPost.$id}`);
+        dispatch(editPost(dbPost))
+        navigate(`/post/${dbPost.$id}`)
       }
     }
     else {
@@ -48,7 +50,8 @@ function PostForm({ post }) {
           userId: userData.$id,
         });
         if (dbPost) {
-          navigate(`/post/${dbPost.$id}`);
+          dispatch(addPost(dbPost))
+          navigate(`/post/${dbPost.$id}`)
         }
         else{
           console.log("NO dbPost id created:: issue in createPost");

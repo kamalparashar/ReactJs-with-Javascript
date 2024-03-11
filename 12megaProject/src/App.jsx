@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import './App.css'
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import { useDispatch} from 'react-redux';
 import authService from './appwrite/auth';
 import { login, logout } from './store/authSlice';
 import {Header, Footer} from './components';
 import { Outlet } from 'react-router-dom';
+import { addPost } from './store/postsSlice';
+import appwriteService from './appwrite/config';
 
 function App() {
   
@@ -28,11 +30,25 @@ function App() {
     .finally(() => setLoading(false))
   },[])
 
+  
+  useEffect(() => {
+    appwriteService.getPosts([]).then((posts) => {
+            if(posts) {
+              (posts.documents).forEach(post => {
+                if (post){
+                  dispatch(addPost(post))
+                }
+              })
+            }
+        })
+  },[])
+  
+
   return !loading ? (
-  <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+  <div className='min-h-fit flex flex-wrap content-between bg-gray-400'>
     <div className='w-full block'>
       <Header />
-      <main>
+      <main className='min-h-screen'>
         <Outlet />
       </main>
       <Footer />
