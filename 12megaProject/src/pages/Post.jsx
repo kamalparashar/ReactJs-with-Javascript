@@ -4,9 +4,10 @@ import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
+import { removePost } from "../store/postsSlice";
 
 export default function Post() {
-    const [post, setPost] = useState()
+    const [post, setPost] = useState(null)
     const { slug } = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -17,9 +18,13 @@ export default function Post() {
     useEffect(() => {
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
-            });
+                if (post) {
+                    setPost(post)
+                }
+                else{
+                    navigate("/")
+                }
+            })
         } else navigate("/");
     }, [slug, navigate]);
 
@@ -28,13 +33,13 @@ export default function Post() {
             if (status) {
                 appwriteService.deleteFile(post.FeaturedImage).then((status) => {
                     if(status){
-                        dispatch(deletePost(post))
+                        dispatch(removePost(post))
                         navigate("/")
                     }
                 })
             }
-        });
-    };
+        })
+    }
 
     return post ? (
         <div className="py-8">

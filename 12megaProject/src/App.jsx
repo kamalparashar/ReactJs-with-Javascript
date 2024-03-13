@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import authService from './appwrite/auth';
 import { login, logout } from './store/authSlice';
 import {Header, Footer} from './components';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { addPost } from './store/postsSlice';
 import appwriteService from './appwrite/config';
 
 function App() {
   
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+  
   useEffect(()=>{
     authService.getCurrentUser()
     .then((userData) => {
@@ -36,7 +36,7 @@ function App() {
             if(posts) {
               (posts.documents).forEach(post => {
                 if (post){
-                  dispatch(addPost(post))
+                  dispatch(addPost(post));
                 }
               })
             }

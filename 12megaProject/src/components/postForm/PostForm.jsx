@@ -17,9 +17,9 @@ function PostForm({ post }) {
       },
     });
 
-  const navigate = useNavigate();
-  const userData = useSelector((state) => state.auth.userData);
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const userData = useSelector((state) => state.auth.userData)
+  const dispatch = useDispatch()
   
   const submit = async (data) => {
     if (post) {

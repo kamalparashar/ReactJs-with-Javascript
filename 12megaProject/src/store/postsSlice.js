@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     posts: [{
@@ -23,15 +23,14 @@ export const postSlice = createSlice({
                 slug:action.payload.slug,
                 content:action.payload.content,
                 FeaturedImage:action.payload.FeaturedImage,
-                
             }
             state.posts.push(post)
         },
-        deletePost: (state, action) => {
+        removePost: (state, action) => {
             state.posts = state.posts.filter((post) => post.$id !== action.payload.$id)
         },
         editPost: (state, action) => {
-            state.posts.map((post) => {
+            state.posts.forEach((post) => {
                 if(post.$id === action.payload.$id){
                     post.title = action.payload.title
                     post.slug = action.payload.slug
@@ -43,6 +42,6 @@ export const postSlice = createSlice({
     }
 })
 
-export const {addPost, deletePost, editPost} = postSlice.actions;
+export const {addPost, removePost, editPost} = postSlice.actions;
 
 export default postSlice.reducer;

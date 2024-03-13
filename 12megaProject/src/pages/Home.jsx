@@ -11,12 +11,12 @@ function Home() {
     return (
       <div className='w-full py-8'>
           <Container>
-                {(posts.length === 0) ? 
-                  <h1 className="text-2xl font-bold hover:text-gray-500">
+                {(posts.length === 1) ? 
+                  <h1 className="text-2xl font-bold flex justify-center items-center hover:text-gray-500">
                     No Posts to show
                   </h1> : 
                   <div className='flex flex-wrap'>
-                  {posts.map((post) => (
+                  {posts.slice(1).map((post) => (
                       <div key={post.$id} className='p-2 w-1/4'>
                           <PostCard {...post} />
                       </div>
